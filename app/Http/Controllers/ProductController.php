@@ -7,6 +7,7 @@ use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -59,7 +60,7 @@ class ProductController extends Controller
 
         return response([
             'data'=> new ProductResource($product)
-        ]);
+        ],Response::HTTP_CREATED);
 
     }
 
@@ -100,7 +101,7 @@ class ProductController extends Controller
         $product->update($request->all());
         return response([
             'data'=> new ProductResource($product)
-        ]);
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -112,5 +113,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        $product->delete();
+        return response(null,Response::HTTP_NO_CONTENT);
     }
 }
